@@ -1,4 +1,6 @@
+import os
 import time
+from dotenv import load_dotenv
 import pandas as pd
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -6,6 +8,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 ### variável global para o driver ###
+load_dotenv()
+
 driver = None
 
 ### função para garantir que a página está completamente carregada ###
@@ -29,7 +33,7 @@ def preencher_formulario():
     ### definir manualmente os nomes das colunas com base nos 17 campos fornecidos ###
     df.columns = [
         'DATA PROVISÃO', 'CLIENTE', 'UND NEGÓCIO', 'I.C', 'TIPO DOC', 'NÚM DOC',
-        'CLASSIFICAÇÃO', 'RECEITA BRUTA', 'ICMS', 'ISS', 'PIS', 
+        'CLASSIFICAÇÃO', 'RECEITA BRUTA', 'ICMS', 'ISS', 'PIS',
         'COFINS', 'CPRB', 'RECEITA LÍQUIDA', 'OBSERVAÇÃO', 'STATUS', 'LINK'
     ]
 
@@ -141,5 +145,8 @@ def abrir_driver():
     global driver
     driver = webdriver.Chrome()  ### inicia o driver do chrome ###
 
-    driver.get('https://expressonepomucenobr.sharepoint.com/sites/Custos-DPO/_layouts/15/listforms.aspx?cid=MDEyZGFhNmYtOGFlYS00OGU2LWExYTQtY2ZlZTBiMjcyZDk4&nav=ZDVlNDQ3M2YtMzAxNi00Y2E2LWFjNGItNDU4NjhlYmE4MzY1')
+    sharepoint_url = os.getenv("SHAREPOINT_LIST_URL")
+    if not sharepoint_url:
+        raise RuntimeError("Set SHAREPOINT_LIST_URL in the local environment.")
+    driver.get(sharepoint_url)
     esperar_pagina_carregar()  ### espera a página carregar completamente ###
