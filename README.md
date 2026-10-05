@@ -2,7 +2,7 @@
 
 A local desktop workflow that reads rows from Excel and enters mapped values into SharePoint List forms through browser automation.
 
-> Private repository: the current automation targets a company-specific SharePoint environment. Use only authorized accounts and keep workbook data and browser sessions local.
+> Public source edition. Configure credentials locally and use empty or synthetic inputs. Company and institution names identify the original integration context; this repository does not claim affiliation or endorsement.
 
 ## Configuration
 
